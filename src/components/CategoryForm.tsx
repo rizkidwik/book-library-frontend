@@ -1,31 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Category } from '@/types/category';
-import api from '@/lib/api';
+import { CategoryService } from '@/services/CategoryService';
 
 interface CategoryFormProps {
-  category?: Category;
-  onSubmit: (category: Omit<Category, 'id' | 'name'>) => void;
+  category?: Category | null;
+  onUpdate: (category: Category) => void;
+  onCreate: (category: Category) => void;
   onCancel: () => void;
 }
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({
   category,
+  onUpdate,
+  onCreate,
   onCancel,
 }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    id:0
+  const [formData, setFormData] = useState<Omit<Category,'id'>>({
+    name: ''
   });
 
+  const [formError, setFormError] = useState<string | null>(null)
+  
   useEffect(() => {
     if (category) {
       setFormData({
-        id: category.id as number,
         name: category.name
       });
     } else {
       setFormData({ 
-        id: 0,
         name: '' 
     });
     }
@@ -34,16 +36,22 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        const response = await api.patch('/categories/' + formData.id ,formData)
-        setCategories(prevData => [...prevData, formData])
-    } catch (error) {
-        
+        if(category && category.id){
+            const updateCategory = await CategoryService.updateCategory({...formData, id: category.id})
+            onUpdate(updateCategory)
+        } else {
+            const newCategory = await CategoryService.createCategory(formData)
+            onCreate(newCategory)
+        }
+    } catch (error: any) {
+        setFormError(error.message)
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
+      {formError && <div className="error-message">{formError}</div>}
         <label className="block mb-2 font-medium">
           Name:
           <input

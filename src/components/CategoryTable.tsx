@@ -36,7 +36,7 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({
                   Edit
                 </button>
                 <button
-                  onClick={() => onDelete(category.id)}
+                  onClick={() => onDelete(category.id ?? null)}
                   className="px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600"
                 >
                   Delete
