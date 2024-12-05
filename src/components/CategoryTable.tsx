@@ -24,9 +24,9 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
+          {categories.map((category,index) => (
             <tr key={category.id} className="hover:bg-gray-50">
-              <td className="p-3 border">{category.id}</td>
+              <td className="p-3 border">{index + 1}</td>
               <td className="p-3 border">{category.name}</td>
               <td className="p-3 border">
                 <button

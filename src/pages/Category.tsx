@@ -11,7 +11,7 @@ const CategoriesPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
+//   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,12 +44,12 @@ const CategoriesPage: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+    //   setLoading(true);
       const fetchCategory = await CategoryService.fetchCategory();
       setCategories(fetchCategory);
     } catch (error: any) {
       setError(error.message);
-      setLoading(false);
+    //   setLoading(false);
     }
   };
 
@@ -59,7 +59,6 @@ const CategoriesPage: React.FC = () => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
-        {loading ? <p>Loading</p> : null}
         {error && <div className="error-message">{error}</div>}
       <div className="flex justify-between mb-6">
         <h1 className="text-2xl font-bold">Categories Management</h1>

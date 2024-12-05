@@ -6,6 +6,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import CategoriesPage from './pages/Category';
+import { BookPage } from './pages/BookPage';
 
 
 function App() {
@@ -33,9 +34,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <AuthLayout>
-                  <div className="bg-white shadow rounded-lg p-6">
-                    <h1 className="text-2xl font-semibold text-gray-900">Books</h1>
-                  </div>
+                  <BookPage/>
                 </AuthLayout>
               </ProtectedRoute>
             }
