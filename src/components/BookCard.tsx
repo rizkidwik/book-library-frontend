@@ -2,11 +2,13 @@ import { Book } from "@/types/book"
 import React from "react";
 
 interface BookCardProps {
-    books: Book[]
+    books: Book[],
+    onEdit: (book: Book) => void;
   }
   
 export const BookCard: React.FC<BookCardProps> = ({
-    books
+    books,
+    onEdit
 }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -19,6 +21,7 @@ export const BookCard: React.FC<BookCardProps> = ({
                     </div>
                     <div className="max-w-sm p-5">
                     <button
+                    onClick={() => onEdit(item)}
                     className="px-3 py-1 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                     >
                     Edit

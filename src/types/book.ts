@@ -3,9 +3,11 @@ export interface Book {
     title: string;
     description: string;
     image_url: string;
-    thickness: string;
+    thickness?: string;
     release_year: string;
-    total_page: number;
+    total_page?: number;
     price: string;
+    category_id: number;
 
+    image?: File | null;
 }

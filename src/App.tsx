@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { AuthLayout } from './components/AuthLayout';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { Dashboard } from './pages/Dashboard';
-import CategoriesPage from './pages/Category';
-import { BookPage } from './pages/BookPage';
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AuthLayout } from "./components/AuthLayout";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { Dashboard } from "./pages/Dashboard";
+import CategoriesPage from "./pages/Category";
+import { BookPage } from "./pages/BookPage";
+import { BookForm } from "./components/BookForm";
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <AuthLayout>
-                  <BookPage/>
+                  <BookPage />
                 </AuthLayout>
               </ProtectedRoute>
             }
@@ -44,7 +44,17 @@ function App() {
             element={
               <ProtectedRoute>
                 <AuthLayout>
-                    <CategoriesPage/>
+                  <CategoriesPage />
+                </AuthLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/books/form"
+            element={
+              <ProtectedRoute>
+                <AuthLayout>
+                    <BookForm />
                 </AuthLayout>
               </ProtectedRoute>
             }
