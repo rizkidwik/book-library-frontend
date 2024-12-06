@@ -89,7 +89,8 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
       data.append("description", formData.description);
       data.append("total_page", (formData.total_page ?? 0).toString());
       data.append("category_id", formData.category_id.toString());
-      console.log(formData.image instanceof File)
+      data.append("release_year", formData.release_year);
+      data.append("price", formData.price);
       if (formData.image) {
         data.append("image_url", formData.image);
       }
@@ -177,6 +178,16 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
           <input
             className="w-full p-2 mt-1 border"
             name="price"
+            type="text"
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 font-medium">Total Page</label>
+          <input
+            className="w-full p-2 mt-1 border"
+            name="total_page"
             type="text"
             onChange={handleInputChange}
             required
