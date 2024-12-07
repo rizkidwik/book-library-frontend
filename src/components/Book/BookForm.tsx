@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Category } from "@/types/category";
 import { Book } from "@/types/book";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CategoryService } from "@/services/CategoryService";
 import { BookService } from "@/services/BookService";
 
-interface BookFormProps {
-  books?: Book | null;
-}
+export const BookForm = () => {
+  const location = useLocation();
+  const bookData = location.state as Book | undefined;
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [years, setYears] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const [formError, setFormError] = useState<string | null>(null);
 
-export const BookForm: React.FC<BookFormProps> = ({ books }) => {
   const [formData, setFormData] = useState<Omit<Book, "id,file">>({
     title: "",
     description: "",
@@ -40,26 +43,29 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
       }));
     }
   };
-  
-
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [years, setYears] = useState<any[]>([]);
-  const navigate = useNavigate();
 
   const handleCancel = () => {
     navigate("/books");
   };
 
-  const [formError, setFormError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchCategories();
-    generateYear();
-  }, []);
+  const populateEdit = () => {
+    if (bookData) {
+      setFormData({
+        id: bookData.id || 0,
+        title: bookData.title || "",
+        description: bookData.description || "",
+        image_url: bookData.image_url || "",
+        release_year: bookData.release_year || "",
+        price: bookData.price || "",
+        category_id: Number(bookData.category_id) || 0,
+        total_page: bookData.total_page || 0,
+        image: bookData.image || null,
+      });
+    }
+  };
 
   const fetchCategories = async () => {
     try {
-      //   setLoading(true);
       const fetchCategory = await CategoryService.fetchCategory();
       setCategories(fetchCategory);
     } catch (error: any) {
@@ -94,14 +100,26 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
       if (formData.image) {
         data.append("image_url", formData.image);
       }
-      await BookService.createBook(data);
+      if (!bookData) {
+        await BookService.createBook(data);
+      } else {
+        await BookService.updateBook({ ...formData, id: formData.id });
+      }
+      navigate("/books");
     } catch (error: any) {}
   };
+
+  useEffect(() => {
+    fetchCategories();
+    generateYear();
+    populateEdit();
+  }, []);
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
       {formError && <div className="error-message">{formError}</div>}
       <form onSubmit={handleSubmit}>
+        <input type="hidden" name="id" value={formData.id} />
         <div className="mb-4">
           <label className="block mb-2 font-medium">
             Title
@@ -136,16 +154,27 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
               type="file"
               className="w-full p-2 mt-1 border rounded"
               accept="image/jpg,image/png,image/jpeg"
-              required
+              required={bookData?.image_url ?  false : true} 
               onChange={handleFileChange}
             />
           </label>
         </div>
+        {bookData?.image_url ? (
+          <div className="mb-4">
+            <img
+              className="w-full"
+              src={"http://localhost:3000/" + bookData?.image_url}
+            />
+          </div>
+        ) : (
+          ``
+        )}
         <div className="mb-4">
           <label className="block mb-2 font-medium">Category</label>
           <select
             className="w-full p-2 mt-1 border"
             name="category_id"
+            value={formData?.category_id}
             onChange={handleInputChange}
           >
             {categories.map((option, index) => {
@@ -162,6 +191,7 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
           <select
             className="w-full p-2 mt-1 border"
             name="release_year"
+            value={formData?.release_year}
             onChange={handleInputChange}
           >
             {years.map((option, index) => {
@@ -179,6 +209,7 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
             className="w-full p-2 mt-1 border"
             name="price"
             type="text"
+            value={formData.price}
             onChange={handleInputChange}
             required
           />
@@ -189,6 +220,7 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
             className="w-full p-2 mt-1 border"
             name="total_page"
             type="text"
+            value={formData.total_page}
             onChange={handleInputChange}
             required
           />
@@ -206,7 +238,7 @@ export const BookForm: React.FC<BookFormProps> = ({ books }) => {
             type="submit"
             className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
           >
-            {books ? "Update" : "Add"}
+            {bookData ? "Update" : "Add"}
           </button>
         </div>
       </form>

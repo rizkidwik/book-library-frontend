@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "@/types/category";
-import { CategoryTable } from "@/components/CategoryTable";
-import { CategoryForm } from "@/components/CategoryForm";
+import { CategoryTable } from "@/components/Category/CategoryTable";
+import { CategoryForm } from "@/components/Category/CategoryForm";
 import { Modal } from "@/components/Modal";
 import { CategoryService } from "@/services/CategoryService";
 

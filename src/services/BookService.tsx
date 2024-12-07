@@ -25,21 +25,21 @@ export const BookService = {
     }
   },
 
-  // async updateCategory(category: Category): Promise<Category> {
-  //     try {
-  //         const response = await api.patch(`/categories/${category.id}`,category)
-  //         return response.data
-  //     } catch (error) {
-  //         throw handleError(error)
-  //     }
-  // },
+  async updateBook(book: Book): Promise<Book> {
+      try {
+          const response = await api.patch(`/books/${book.id}`,book)
+          return response.data
+      } catch (error) {
+          throw handleError(error)
+      }
+  },
 
-  // async deleteCategory(id: number | null): Promise<void> {
-  //     try {
-  //         const response = await api.delete(`categories/${id}`)
-  //         return response.data
-  //     } catch (error) {
-  //         throw handleError(error)
-  //     }
-  // }
+  async deleteBook(id: number | null): Promise<void> {
+      try {
+          const response = await api.delete(`books/${id}`)
+          return response.data
+      } catch (error) {
+          throw handleError(error)
+      }
+  }
 };

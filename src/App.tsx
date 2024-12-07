@@ -7,7 +7,7 @@ import { Register } from "./pages/Register";
 import { Dashboard } from "./pages/Dashboard";
 import CategoriesPage from "./pages/Category";
 import { BookPage } from "./pages/BookPage";
-import { BookForm } from "./components/BookForm";
+import { BookForm } from "./components/Book/BookForm";
 
 function App() {
   return (
@@ -54,7 +54,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <AuthLayout>
-                    <BookForm />
+                  <BookForm />
                 </AuthLayout>
               </ProtectedRoute>
             }
