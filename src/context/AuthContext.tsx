@@ -63,6 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           });
         } catch (error) {
           localStorage.removeItem('token');
+          localStorage.removeItem('roles');
           dispatch({ type: 'LOGOUT' });
         }
       } else {
@@ -76,6 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (credentials: LoginCredentials) => {
     const response = await api.post<LoginResponse>('/auth/login', credentials);
     localStorage.setItem('token', response.data.data.token);
+    localStorage.setItem('roles', response.data.data.user.roles)
     dispatch({ type: 'LOGIN_SUCCESS', payload: response.data.data });
   };
 
@@ -87,6 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('roles');
     dispatch({ type: 'LOGOUT' });
   };
 

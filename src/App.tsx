@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/Dashboard";
 import CategoriesPage from "./pages/Category";
 import { BookPage } from "./pages/BookPage";
 import { BookForm } from "./components/Book/BookForm";
+import { BorrowPage } from "./pages/BorrowPage";
 
 function App() {
   return (
@@ -55,6 +56,16 @@ function App() {
               <ProtectedRoute>
                 <AuthLayout>
                   <BookForm />
+                </AuthLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/borrow"
+            element={
+              <ProtectedRoute>
+                <AuthLayout>
+                    <BorrowPage/>
                 </AuthLayout>
               </ProtectedRoute>
             }
