@@ -39,6 +39,7 @@ export const BookPage: React.FC = () => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
+    {error && <div className="error-message">{error}</div>}
       <div className="flex justify-between mb-6">
         <h1 className="text-2xl font-bold">Book</h1>
         <button

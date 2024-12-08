@@ -11,7 +11,6 @@ export const BookForm = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [years, setYears] = useState<any[]>([]);
   const navigate = useNavigate();
-  const [formError, setFormError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Omit<Book, "id,file">>({
     title: "",
@@ -117,7 +116,6 @@ export const BookForm = () => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
-      {formError && <div className="error-message">{formError}</div>}
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="id" value={formData.id} />
         <div className="mb-4">

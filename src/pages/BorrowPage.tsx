@@ -1,5 +1,4 @@
 import { BorrowList } from "@/components/AdminBorrow/BorrowList";
-import { BookCard } from "@/components/Book/BookCard";
 import { BorrowBookCard } from "@/components/Borrow/BorrowBookCard";
 import { BookService } from "@/services/BookService";
 import { BorrowService } from "@/services/BorrowService";
@@ -31,15 +30,6 @@ export const BorrowPage: React.FC = () => {
           setError(error.message);
       }
   }
-
-  const handleDelete = async (id: number | null) => {
-    try {
-      await BookService.deleteBook(id);
-      fetchData()
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if(roles == 'admin'){
