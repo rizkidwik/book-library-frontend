@@ -1,5 +1,6 @@
 import { BorrowList } from "@/components/AdminBorrow/BorrowList";
 import { BookCard } from "@/components/Book/BookCard";
+import { BorrowBookCard } from "@/components/Borrow/BorrowBookCard";
 import { BookService } from "@/services/BookService";
 import { BorrowService } from "@/services/BorrowService";
 import { Book } from "@/types/book";
@@ -58,7 +59,7 @@ export const BorrowPage: React.FC = () => {
         <h1 className="text-2xl font-bold">Book</h1>
       </div>
 
-      <BookCard books={books} onDelete={handleDelete} />
+      <BorrowBookCard books={books} />
     </div> : <div className="bg-white shadow rounded-lg p-6">
         <div className="alert alert-danger">
             {error}

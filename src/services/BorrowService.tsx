@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 import handleError from "@/lib/handleError";
-import { Borrow } from "@/types/borrow";
+import { Borrow, RequestBorrow } from "@/types/borrow";
 
 export const BorrowService = {
   async list(): Promise<Borrow[]> {
@@ -13,20 +13,29 @@ export const BorrowService = {
   },
 
   async approve(id: number | null): Promise<void> {
-      try {
-          const response = await api.post(`/borrows/approve`,{id})
-          return response.data
-      } catch (error) {
-          throw handleError(error)
-      }
+    try {
+      const response = await api.post(`/borrows/approve`, { id });
+      return response.data;
+    } catch (error) {
+      throw handleError(error);
+    }
   },
 
   async return(id: number | null): Promise<void> {
-      try {
-          const response = await api.post(`/borrows/return`,{id})
-          return response.data
-      } catch (error) {
-          throw handleError(error)
-      }
-  }
+    try {
+      const response = await api.post(`/borrows/return`, { id });
+      return response.data;
+    } catch (error) {
+      throw handleError(error);
+    }
+  },
+
+  async request(data: RequestBorrow): Promise<void> {
+    try {
+      const response = await api.post(`/borrows/request`, data);
+      return response.data;
+    } catch (error) {
+      throw handleError(error);
+    }
+  },
 };

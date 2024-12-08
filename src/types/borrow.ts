@@ -16,3 +16,8 @@ export enum BORROW_STATUS {
     RETURN = 2,
     LATE = 3
 }
+
+export interface RequestBorrow {
+    book_id: number;
+    day: number;
+}
